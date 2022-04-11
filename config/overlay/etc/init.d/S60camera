@@ -95,9 +95,9 @@ case "$1" in
                 logger -s "Starting v4l2rtspserver"
 
                 #/usr/bin/v4l2rtspserver $AUTH_PARAMS -l 1 -A 48000 -C 1 -a S16_LE /dev/video3,hw:0,1 /dev/video4 > /dev/null &
-                #/usr/bin/v4l2rtspserver $AUTH_PARAMS -A 48000 -C 1 -a S16_LE -l 1 /dev/video3,hw:0,1 /dev/video5 > /dev/null &
+                /usr/bin/v4l2rtspserver $AUTH_PARAMS -A 48000 -C 1 -a S16_LE -l 1 /dev/video3,hw:0,1 /dev/video5 > /dev/null &
 
-                /usr/bin/v412rtspserver $AUTH_PARAMS /dev/video3 /dev/video5 > /dev/null &
+                #/usr/bin/v412rtspserver $AUTH_PARAMS /dev/video3 /dev/video5 > /dev/null &
 
         fi
 
