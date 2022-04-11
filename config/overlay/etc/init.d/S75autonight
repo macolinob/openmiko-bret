@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Start script to turn on and off IR LEDs for nightmode
+#
+
+if [[ -f /etc/openmiko.conf ]]; then
+        . /etc/openmiko.conf
+fi
+
+case "$1" in
+  start)
+
+        if [ "$ENABLE_AUTONIGHT" != "1" ]; then
+                exit 0
+        fi
+        logger -s -t autonight "Starting autonight"
+
+########## Modification here
+    #ORIGINAL
+    #/usr/bin/autonight -v -S -c /usr/bin/nightmode.sh -j 3 -w 3 -1 1200000 -2 930000,14,10 -3 3000,17,8 > /var/log/autonight.log 2>&1 &
+
+    #IMPROVED autonight respnose on WyzeV2 - removed logging & verbosity
+    /usr/bin/autonight -S -c /usr/bin/nightmode.sh -j 3 -w 3 -1 1220000 -2 930000,18,1 -3 2500,17,1 > /dev/null 2>&1 &
+
+        [ $? == 0 ] && echo "OK" || echo "FAIL"
+        ;;
+  stop)
+        logger -s -t autonight "Stopping autonight"
+        killall autonight
+        [ $? == 0 ] && echo "OK" || echo "FAIL"
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
